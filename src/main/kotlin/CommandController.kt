@@ -7,10 +7,8 @@ import com.google.api.services.sheets.v4.model.ValueRange
 import java.time.LocalDate
 
 class CommandController(private val bot: Bot, private val sheetsUtil: GoogleSheetsUtil, private val markupUtil: MarkupUtil) {
-    private val feedbackChatId: Long = -340647063
-
     fun start() {
-        bot.chain("/start", predicate = { msg -> !sheetsUtil.getStudents().any { it.id == msg.chat.id.toString() } && msg.chat.id != feedbackChatId }) { msg ->
+        bot.chain("/start", predicate = { msg -> !sheetsUtil.getStudents().any { it.id == msg.chat.id.toString() } && msg.chat.id != System.getenv("feedbackChatId").toLong() }) { msg ->
             bot.sendMessage(msg.chat.id, MessageTexts.GREETING).get()
             bot.sendMessage(msg.chat.id, MessageTexts.FREE_SPACE).get()
             bot.sendMessage(msg.chat.id, MessageTexts.COMMUNITY).get()
@@ -93,7 +91,7 @@ class CommandController(private val bot: Bot, private val sheetsUtil: GoogleShee
             bot.sendMessage(msg.chat.id, MessageTexts.WANNA_FEEDBACK, markup = ReplyKeyboardMarkup(listOf(listOf())))
         }.then { msg ->
             bot.sendMessage(msg.chat.id, MessageTexts.RESULT_FEEDBACK, markup = markupUtil.getDefaultMarkup())
-            bot.forwardMessage(feedbackChatId, msg.chat.id, msg.message_id)
+            bot.forwardMessage(System.getenv("feedbackChatId").toLong(), msg.chat.id, msg.message_id)
         }.build()
     }
 }
