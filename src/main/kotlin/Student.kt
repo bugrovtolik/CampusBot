@@ -6,5 +6,7 @@ data class Student(
     val yearStudy: String,
     val studProInfo: String,
     val registerDate: String,
-    val subscribed: String
+    val subscribed: String,
+    val lastCheckinDate: String,
+    val checkinCount: String
 )

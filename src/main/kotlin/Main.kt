@@ -8,6 +8,7 @@ fun main() {
     controller.checkin()
     controller.subscribe()
     controller.feedback()
+    controller.whoiam()
 
     bot.start()
 }
