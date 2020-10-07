@@ -18,7 +18,7 @@ dependencies {
 }
 
 application {
-    mainClassName = "Main"
+    mainClassName = "MainKt"
 }
 
 tasks {
