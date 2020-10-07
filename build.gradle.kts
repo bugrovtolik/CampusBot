@@ -19,14 +19,8 @@ dependencies {
 }
 
 heroku {
-    includes = mutableListOf(
-        "build/libs/CampusBot.jar"
-    )
     isIncludeBuildDir = false
     jdkVersion = "15"
-    processTypes = mutableMapOf<String,String>(
-        "worker" to "java -jar build/libs/CampusBot.jar"
-    )
 }
 
 application {

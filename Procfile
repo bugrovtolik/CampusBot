@@ -1,1 +1,1 @@
-worker: java -jar build/libs/CampusBot.jar
+worker: java -jar build/libs/CampusBot-1.0-SNAPSHOT.jar
