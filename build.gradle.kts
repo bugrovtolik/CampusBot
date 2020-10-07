@@ -37,9 +37,6 @@ tasks {
     withType<Jar> {
         manifest { attributes(mapOf("Main-Class" to application.mainClassName)) }
     }
-    withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
-        kotlinOptions.jvmTarget = "15"
-    }
     register("stage") {
         dependsOn("build")
     }
