@@ -11,11 +11,12 @@ classes/
 out/
 
 ######################
-# Maven
+# Gradle
 ######################
 /log/
 /target/
 /build/
+.gradle/
 
 ######################
 # Package Files
