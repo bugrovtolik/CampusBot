@@ -26,7 +26,7 @@ class GoogleSheetsUtil {
         val students = getStudents()
         val row = students.indexOfFirst { it.id == id.toString() } + 2
         getSheets().spreadsheets().values()
-            .update(System.getenv("documentId"), "Students!$column$row", ValueRange().setValues(listOf(listOf(text))))
+            .update(System.getenv("documentId"), "${System.getenv("sheetName")}!$column$row", ValueRange().setValues(listOf(listOf(text))))
             .setValueInputOption("USER_ENTERED").execute()
     }
 
