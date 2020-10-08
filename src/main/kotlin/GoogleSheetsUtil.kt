@@ -25,9 +25,8 @@ class GoogleSheetsUtil {
     fun updateColumn(column: String, id: Long, text: String) {
         val students = getStudents()
         val row = students.indexOfFirst { it.id == id.toString() } + 2
-        getSheets().spreadsheets().values()
-            .update(System.getenv("documentId"), "${System.getenv("sheetName")}!$column$row", ValueRange().setValues(listOf(listOf(text))))
-            .setValueInputOption("USER_ENTERED").execute()
+        getSheets().spreadsheets().values().update(System.getenv("documentId"), "${System.getenv("sheetName")}!$column$row",
+                ValueRange().setValues(listOf(listOf(text)))).setValueInputOption("USER_ENTERED").execute()
     }
 
     fun checkedInToday(chatId: Long): Boolean {
