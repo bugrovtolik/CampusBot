@@ -12,7 +12,7 @@ class CommandController(private val bot: Bot, private val sheetsUtil: GoogleShee
             bot.sendMessage(msg.chat.id, MessageTexts.GREETING).get()
             bot.sendMessage(msg.chat.id, MessageTexts.ASK_FIRST_NAME)
 
-            sheetsUtil.appendToSheet("Students", ValueRange().setValues(listOf(listOf(msg.chat.id.toString()))))
+            sheetsUtil.appendToSheet(System.getenv("sheetName"), ValueRange().setValues(listOf(listOf(msg.chat.id.toString()))))
         }.then { msg ->
             bot.sendMessage(msg.chat.id, MessageTexts.ASK_LAST_NAME)
             sheetsUtil.updateColumn("B", msg.chat.id, msg.text ?: "")

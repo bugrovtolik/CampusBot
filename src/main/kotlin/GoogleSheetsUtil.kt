@@ -39,7 +39,7 @@ class GoogleSheetsUtil {
     }
 
     fun getStudents(): List<Student> {
-        return (readFromSheet("Students") as List<*>).drop(1).filterIsInstance<List<String>>().map {
+        return (readFromSheet(System.getenv("sheetName")) as List<*>).drop(1).filterIsInstance<List<String>>().map {
             Student(
                 id = it[0],
                 firstName = it.getOrNull(1) ?: "",
