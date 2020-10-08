@@ -43,13 +43,15 @@ class GoogleSheetsUtil {
                 id = it[0],
                 firstName = it.getOrNull(1) ?: "",
                 lastName = it.getOrNull(2) ?: "",
-                university = it.getOrNull(3) ?: "",
-                yearStudy = it.getOrNull(4) ?: "",
-                studProInfo = it.getOrNull(5) ?: "",
-                registerDate = it.getOrNull(6) ?: "",
-                subscribed = it.getOrNull(7) ?: "",
-                lastCheckinDate = it.getOrNull(8) ?: "",
-                checkinCount = it.getOrNull(9) ?: ""
+                lastCheckinDate = it.getOrNull(3) ?: "",
+                checkinCount = it.getOrNull(4) ?: "",
+                registerDate = it.getOrNull(5) ?: "",
+                wantWhoIAm = it.getOrNull(6) ?: "",
+                wantLectorium = it.getOrNull(7) ?: "",
+                subscribed = it.getOrNull(8) ?: "",
+                university = it.getOrNull(9) ?: "",
+                yearStudy = it.getOrNull(10) ?: "",
+                studProInfo = it.getOrNull(11) ?: ""
             )
         }
     }
