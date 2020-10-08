@@ -30,7 +30,7 @@ class GoogleSheetsUtil {
     }
 
     fun checkedInToday(chatId: Long): Boolean {
-        return getStudents().any { it.id == chatId.toString() && it.lastCheckinDate == LocalDate.now().toString() }
+        return getStudents().any { it.id == chatId.toString() && it.lastCheckinDate.substring(0..9) == LocalDate.now().toString() }
     }
 
     fun isSubscribed(chatId: Long): Boolean {

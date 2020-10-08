@@ -1,10 +1,10 @@
 import com.elbekD.bot.Bot
 import com.elbekD.bot.feature.chain.chain
 import com.elbekD.bot.feature.chain.jumpTo
-import com.elbekD.bot.feature.chain.jumpToAndFire
 import com.elbekD.bot.types.ReplyKeyboardRemove
 import com.google.api.services.sheets.v4.model.ValueRange
-import java.time.LocalDate
+import java.time.LocalDateTime
+import java.time.temporal.ChronoUnit
 
 class CommandController(private val bot: Bot, private val sheetsUtil: GoogleSheetsUtil, private val markupUtil: MarkupUtil) {
     fun start() {
@@ -44,8 +44,8 @@ class CommandController(private val bot: Bot, private val sheetsUtil: GoogleShee
         }.then("checkAgreed") { msg ->
             if (msg.text == MessageTexts.AGREE) {
                 bot.sendMessage(msg.chat.id, MessageTexts.FINISH_REGISTRATION, markup = ReplyKeyboardRemove(true))
-                sheetsUtil.updateColumn("D", msg.chat.id, LocalDate.now().toString())
-                sheetsUtil.updateColumn("F", msg.chat.id, LocalDate.now().toString())
+                sheetsUtil.updateColumn("D", msg.chat.id, LocalDateTime.now().truncatedTo(ChronoUnit.MINUTES).toString())
+                sheetsUtil.updateColumn("F", msg.chat.id, LocalDateTime.now().truncatedTo(ChronoUnit.MINUTES).toString())
                 sheetsUtil.updateColumn("E", msg.chat.id, "1")
             } else {
                 bot.sendMessage(msg.chat.id, MessageTexts.FORCE_AGREE)
@@ -61,7 +61,7 @@ class CommandController(private val bot: Bot, private val sheetsUtil: GoogleShee
             } else {
                 bot.sendMessage(msg.chat.id, MessageTexts.THANKS, markup = ReplyKeyboardRemove(true))
                 val student = sheetsUtil.getStudents().first { it.id == msg.chat.id.toString() }
-                sheetsUtil.updateColumn("I", msg.chat.id, LocalDate.now().toString())
+                sheetsUtil.updateColumn("I", msg.chat.id, LocalDateTime.now().truncatedTo(ChronoUnit.MINUTES).toString())
                 sheetsUtil.updateColumn("J", msg.chat.id, student.checkinCount.toInt().plus(1).toString())
             }
         }
