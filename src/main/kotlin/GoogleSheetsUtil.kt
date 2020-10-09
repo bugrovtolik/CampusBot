@@ -26,7 +26,7 @@ class GoogleSheetsUtil {
     }
 
     fun checkedInToday(chatId: Long): Boolean {
-        return getStudents().any { it.id == chatId.toString() && it.lastCheckinDate.substring(0..9) == LocalDate.now().toString() }
+        return getStudents().any { it.id == chatId.toString() && it.lastCheckinDate?.substring(0..9) == LocalDate.now().toString() }
     }
 
     fun isSubscribed(chatId: Long): Boolean {
@@ -37,17 +37,17 @@ class GoogleSheetsUtil {
         return (readFromSheet(System.getenv("sheetName")) as List<*>).drop(1).filterIsInstance<List<String>>().map {
             Student(
                 id = it[0],
-                firstName = it[1],
-                lastName = it[2],
-                lastCheckinDate = it[3],
-                checkinCount = it[4],
-                registerDate = it[5],
-                wantWhoIAm = it[6],
-                wantLectorium = it[7],
-                subscribed = it[8],
-                university = it[9],
-                yearStudy = it[10],
-                studProInfo = it[11]
+                firstName = it.getOrNull(1),
+                lastName = it.getOrNull(2),
+                lastCheckinDate = it.getOrNull(3),
+                checkinCount = it.getOrNull(4),
+                registerDate = it.getOrNull(5),
+                wantWhoIAm = it.getOrNull(6),
+                wantLectorium = it.getOrNull(7),
+                subscribed = it.getOrNull(8),
+                university = it.getOrNull(9),
+                yearStudy = it.getOrNull(10),
+                studProInfo = it.getOrNull(11)
             )
         }
     }

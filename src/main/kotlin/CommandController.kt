@@ -62,7 +62,7 @@ class CommandController(private val bot: Bot, private val sheetsUtil: GoogleShee
                 bot.sendMessage(msg.chat.id, MessageTexts.THANKS, markup = ReplyKeyboardRemove(true))
                 val student = sheetsUtil.getStudents().first { it.id == msg.chat.id.toString() }
                 sheetsUtil.updateColumn("D", msg.chat.id, LocalDateTime.now().truncatedTo(ChronoUnit.MINUTES).toString())
-                sheetsUtil.updateColumn("E", msg.chat.id, student.checkinCount.toInt().plus(1).toString())
+                sheetsUtil.updateColumn("E", msg.chat.id, student.checkinCount?.toInt()?.plus(1).toString())
             }
         }
     }
