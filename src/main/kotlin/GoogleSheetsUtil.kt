@@ -17,14 +17,10 @@ class GoogleSheetsUtil {
         return getSheets().spreadsheets().values()[System.getenv("documentId"), range].execute()["values"]
     }
 
-    fun appendToSheet(range: String, content: ValueRange): Any? {
-        return getSheets().spreadsheets().values().append(System.getenv("documentId"), range, content)
-            .setValueInputOption("USER_ENTERED").execute()
-    }
-
     fun updateColumn(column: String, id: Long, text: String) {
         val students = getStudents()
-        val row = students.indexOfFirst { it.id == id.toString() } + 2
+        val stdIndex = students.indexOfFirst { it.id == id.toString() }
+        val row = 2 + if (stdIndex > -1) stdIndex else students.count()
         getSheets().spreadsheets().values().update(System.getenv("documentId"), "${System.getenv("sheetName")}!$column$row",
                 ValueRange().setValues(listOf(listOf(text)))).setValueInputOption("USER_ENTERED").execute()
     }

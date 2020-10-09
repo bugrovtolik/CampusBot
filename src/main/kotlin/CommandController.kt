@@ -11,21 +11,21 @@ class CommandController(private val bot: Bot, private val sheetsUtil: GoogleShee
         bot.chain("/start", predicate = { msg -> !sheetsUtil.getStudents().any { it.id == msg.chat.id.toString() } && msg.chat.id != System.getenv("feedbackChatId").toLong() }) { msg ->
             bot.sendMessage(msg.chat.id, MessageTexts.GREETING).get()
             bot.sendMessage(msg.chat.id, MessageTexts.ASK_FIRST_NAME)
-            sheetsUtil.appendToSheet(System.getenv("sheetName"), ValueRange().setValues(listOf(listOf(msg.chat.id.toString()))))
+            sheetsUtil.updateColumn("A", msg.chat.id, msg.chat.id.toString())
         }.then { msg ->
             bot.sendMessage(msg.chat.id, MessageTexts.ASK_LAST_NAME)
-            sheetsUtil.updateColumn("B", msg.chat.id, msg.text ?: "")
+            sheetsUtil.updateColumn("B", msg.chat.id, msg.text.toString())
         }.then { msg ->
             val student = sheetsUtil.getStudents().first { it.id == msg.chat.id.toString() }
             bot.sendMessage(msg.chat.id, MessageTexts.ASK_UNIVERSITY.format(student.firstName), markup = markupUtil.getUniversitiesMarkup())
-            sheetsUtil.updateColumn("C", msg.chat.id, msg.text ?: "")
+            sheetsUtil.updateColumn("C", msg.chat.id, msg.text.toString())
         }.then { msg ->
             bot.sendMessage(msg.chat.id, MessageTexts.ASK_YEAR_STUDY, markup = markupUtil.getYearStudyMarkup())
-            sheetsUtil.updateColumn("J", msg.chat.id, msg.text ?: "")
+            sheetsUtil.updateColumn("J", msg.chat.id, msg.text.toString())
         }.then("checkYear") { msg ->
             if (msg.text?.toIntOrNull() in 1..6) {
                 bot.sendMessage(msg.chat.id, MessageTexts.ASK_STUD_PRO, markup = markupUtil.getStudProMarkup())
-                sheetsUtil.updateColumn("K", msg.chat.id, msg.text ?: "")
+                sheetsUtil.updateColumn("K", msg.chat.id, msg.text.toString())
             } else {
                 bot.sendMessage(msg.chat.id, MessageTexts.DEFAULT)
                 bot.jumpTo("checkYear", msg)
@@ -33,7 +33,7 @@ class CommandController(private val bot: Bot, private val sheetsUtil: GoogleShee
         }.then { msg ->
             bot.sendMessage(msg.chat.id, MessageTexts.ASK_WHO_I_AM).get()
             bot.sendMessage(msg.chat.id, MessageTexts.MINI_WHO_I_AM, markup = markupUtil.getYesNoExtendedMarkup())
-            sheetsUtil.updateColumn("L", msg.chat.id, msg.text ?: "")
+            sheetsUtil.updateColumn("L", msg.chat.id, msg.text.toString())
         }.then { msg ->
             bot.sendMessage(msg.chat.id, MessageTexts.ASK_LECTORIUM, markup = markupUtil.getYesNoExtendedMarkup())
             if (msg.text == MessageTexts.YES_EXTENDED) sheetsUtil.updateColumn("G", msg.chat.id, "'+")
@@ -111,7 +111,7 @@ class CommandController(private val bot: Bot, private val sheetsUtil: GoogleShee
 
         bot.onMessage { msg ->
             if (msg.chat.id == System.getenv("feedbackChatId").toLong()) {
-                msg.reply_to_message?.forward_from?.id?.let { bot.sendMessage(it, msg.text ?: "") }
+                msg.reply_to_message?.forward_from?.id?.let { bot.sendMessage(it, msg.text.toString()) }
             } else {
                 bot.sendMessage(msg.chat.id, bot.getMyCommands().join()
                     .joinToString("\n", "${MessageTexts.DEFAULT}\n") { "/${it.command} - ${it.description}" })
