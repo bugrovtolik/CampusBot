@@ -3,14 +3,13 @@ import com.elbekD.bot.types.*
 class MarkupUtil {
     private val universities = listOf("КНУ ім.Т.Г.Шевченко", "НУХТ", "НУБіП", "КНУКіМ", "НУФВСУ", "КНЛУ")
     private val studPro = listOf("Отримав флаєр", "Реклама в інтернеті", "Через соцмережі Instagram/Facebook", "Через канал в Telegram", "Розповіли друзі")
-    val whoIAm = mapOf(Pair("Реєстрація", "[Реєстрація](https://docs.google.com/forms/d/e/1FAIpQLSfWfOBE2w3eFYX250FG4ByQAEMYf540dWMZ1UVycLqbY2lwgg/viewform)"), Pair("Більше інформації", "[Більше інформації](http://kyivcampus.tilda.ws/whoiam)"))
 
     fun getYesNoMarkup(): ReplyKeyboard {
-        return ReplyKeyboardMarkup(listOf(listOf(KeyboardButton(MessageTexts.YES), KeyboardButton(MessageTexts.NO))))
+        return ReplyKeyboardMarkup(listOf(listOf(KeyboardButton(MessageTexts.YES)), listOf(KeyboardButton(MessageTexts.NO))))
     }
 
     fun getYesNoExtendedMarkup(): ReplyKeyboard {
-        return ReplyKeyboardMarkup(listOf(listOf(KeyboardButton(MessageTexts.YES_EXTENDED), KeyboardButton(MessageTexts.NO_EXTENDED))))
+        return ReplyKeyboardMarkup(listOf(listOf(KeyboardButton(MessageTexts.YES_EXTENDED)), listOf(KeyboardButton(MessageTexts.NO_EXTENDED))))
     }
 
     fun getNoMarkup(): ReplyKeyboard {
@@ -26,7 +25,7 @@ class MarkupUtil {
     }
 
     fun getYearStudyMarkup(): ReplyKeyboard {
-        return ReplyKeyboardMarkup(listOf((1..6).toList().map { KeyboardButton(it.toString()) }))
+        return ReplyKeyboardMarkup((1..6).toList().map { listOf(KeyboardButton(it.toString())) })
     }
 
     fun getStudProMarkup(): ReplyKeyboard {
@@ -34,7 +33,17 @@ class MarkupUtil {
     }
 
     fun getWhoIAmMarkup(): ReplyKeyboard {
-        return ReplyKeyboardMarkup(whoIAm.keys.map { listOf(KeyboardButton(it)) })
+        return getInviteLinkMarkup(listOf(
+            Pair(MessageTexts.WHO_I_AM_REGISTRATION_TEXT, MessageTexts.WHO_I_AM_REGISTRATION_LINK),
+            Pair(MessageTexts.WHO_I_AM_MORE_INFO_TEXT, MessageTexts.WHO_I_AM_MORE_INFO_LINK)
+        ))
     }
 
+    fun getSubscribeMarkup(): ReplyKeyboard {
+        return getInviteLinkMarkup(listOf(Pair(MessageTexts.INVITE_CAMPUS_CHANNEL_TEXT, MessageTexts.INVITE_CAMPUS_CHANNEL_LINK)))
+    }
+
+    private fun getInviteLinkMarkup(textLinks: List<Pair<String, String>>): ReplyKeyboard {
+        return InlineKeyboardMarkup(listOf(textLinks.map { InlineKeyboardButton(it.first, it.second) }))
+    }
 }

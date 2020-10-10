@@ -7,7 +7,6 @@ data class Student(
     val registerDate: String?,
     val wantWhoIAm: String?,
     val wantLectorium: String?,
-    val subscribed: String?,
     val university: String?,
     val yearStudy: String?,
     val studProInfo: String?

@@ -52,11 +52,9 @@ class MessageTexts {
         const val FORCE_AGREE = "Правила є правила, перед тим як користуватися Student Prostir ти маєш ознайомитися і погодитися з ними"
         const val FINISH_REGISTRATION = "Це все, дякую тобі, тепер в майбутньому тобі достатньо буде натиснути \"Зачекінитися\"\nWi-Fi - Campus Ukraine\nPassword - StudentProstir2018"
         const val THANKS = "Дякую, Have Fun! :)"
+        const val WANNA_CHECKIN = "Ти знаходишся в Student Prostir і бажаєш зачекінитися?"
         const val ALREADY_CHECKED_IN = "Здається ти вже сьогодні чекінився.."
-        const val WANNA_SUBSCRIBE = "Маєш бажання отримувати новини про івенти в Student Prostir?"
-        const val WANNA_UNSUBSCRIBE = "Бачу ти вже підписаний на наші новини, бажаєш відписатися?"
-        const val SUBSCRIBED = "Чудово, обіцяю не спамити :)"
-        const val UNSUBSCRIBED = "Добре, якщо захочеш знову підписатися, ти знаєш як :)"
+        const val SUBSCRIBED = "Дякую, ти знайдеш наш телеграм канал за наступним посиланням"
         const val WANNA_FEEDBACK = "Напиши мені відгук"
         const val RESULT_FEEDBACK = "Дякую, зворотній зв'язок зі студентами допомагає нам вдосконалюватися!"
         const val OK = "Гаразд"
@@ -80,5 +78,12 @@ class MessageTexts {
             
             Зрозумій свої мотиви, дізнайся своє покликання та орієнтири для прийняття рішень. Познайомся зі студентами, які живуть свідомо й активно із ЯХТО!
         """.trimIndent()
+
+        const val WHO_I_AM_MORE_INFO_TEXT = "Більше інформації"
+        const val WHO_I_AM_MORE_INFO_LINK = "http://kyivcampus.tilda.ws/whoiam"
+        const val WHO_I_AM_REGISTRATION_TEXT = "Реєстрація"
+        const val WHO_I_AM_REGISTRATION_LINK = "https://docs.google.com/forms/d/e/1FAIpQLSfWfOBE2w3eFYX250FG4ByQAEMYf540dWMZ1UVycLqbY2lwgg/viewform"
+        const val INVITE_CAMPUS_CHANNEL_TEXT = "Підписатися"
+        const val INVITE_CAMPUS_CHANNEL_LINK = "https://t.me/joinchat/AAAAAEw7Hu59D_KNUemEnQ"
     }
 }

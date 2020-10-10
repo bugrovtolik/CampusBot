@@ -29,10 +29,6 @@ class GoogleSheetsUtil {
         return getStudents().any { it.id == chatId.toString() && it.lastCheckinDate?.substring(0..9) == LocalDate.now().toString() }
     }
 
-    fun isSubscribed(chatId: Long): Boolean {
-        return getStudents().any { it.id == chatId.toString() && it.subscribed == "+" }
-    }
-
     fun getStudents(): List<Student> {
         return (readFromSheet(System.getenv("sheetName")) as List<*>).drop(1).filterIsInstance<List<String>>().map {
             Student(
@@ -44,10 +40,9 @@ class GoogleSheetsUtil {
                 registerDate = it.getOrNull(5),
                 wantWhoIAm = it.getOrNull(6),
                 wantLectorium = it.getOrNull(7),
-                subscribed = it.getOrNull(8),
-                university = it.getOrNull(9),
-                yearStudy = it.getOrNull(10),
-                studProInfo = it.getOrNull(11)
+                university = it.getOrNull(8),
+                yearStudy = it.getOrNull(9),
+                studProInfo = it.getOrNull(10)
             )
         }
     }
