@@ -27,6 +27,7 @@ import MessageTexts.Companion.YES
 import com.elbekD.bot.Bot
 import com.elbekD.bot.feature.chain.chain
 import com.elbekD.bot.feature.chain.jumpTo
+import com.elbekD.bot.feature.chain.terminateChain
 import java.time.LocalDateTime
 import java.time.temporal.ChronoUnit
 
@@ -68,23 +69,24 @@ fun main() {
             sheetsUtil.updateColumn("F", msg.chat.id, LocalDateTime.now().truncatedTo(ChronoUnit.MINUTES).toString())
             sheetsUtil.updateColumn("E", msg.chat.id, "1")
         } else {
-            bot.sendMessage(msg.chat.id, FORCE_AGREE)
+            bot.sendMessage(msg.chat.id, FORCE_AGREE, markup = markupUtil.getAgreeRulesMarkup())
             bot.jumpTo("checkAgreed", msg)
         }
     }.build()
 
     bot.chain(label = CHECKIN, predicate = { msg -> msg.text == CHECKIN }) { msg ->
-        bot.sendMessage(msg.chat.id, WANNA_CHECKIN, markup = markupUtil.getYesNoMarkup())
+        if (!sheetsUtil.checkedInToday(msg.chat.id)) {
+            bot.sendMessage(msg.chat.id, WANNA_CHECKIN, markup = markupUtil.getYesNoMarkup())
+        } else {
+            bot.sendMessage(msg.chat.id, ALREADY_CHECKED_IN, markup = markupUtil.getDefaultMarkup())
+            bot.terminateChain(msg.chat.id)
+        }
     }.then { msg ->
         if (msg.text == YES) {
-            if (!sheetsUtil.checkedInToday(msg.chat.id)) {
-                bot.sendMessage(msg.chat.id, THANKS, markup = markupUtil.getDefaultMarkup())
-                val student = sheetsUtil.getStudents().first { it.id == msg.chat.id.toString() }
-                sheetsUtil.updateColumn("D", msg.chat.id, LocalDateTime.now().truncatedTo(ChronoUnit.MINUTES).toString())
-                sheetsUtil.updateColumn("E", msg.chat.id, student.checkinCount?.toInt()?.plus(1).toString())
-            } else {
-                bot.sendMessage(msg.chat.id, ALREADY_CHECKED_IN, markup = markupUtil.getDefaultMarkup())
-            }
+            bot.sendMessage(msg.chat.id, THANKS, markup = markupUtil.getDefaultMarkup())
+            val student = sheetsUtil.getStudents().first { it.id == msg.chat.id.toString() }
+            sheetsUtil.updateColumn("D", msg.chat.id, LocalDateTime.now().truncatedTo(ChronoUnit.MINUTES).toString())
+            sheetsUtil.updateColumn("E", msg.chat.id, student.checkinCount?.toInt()?.plus(1).toString())
         } else {
             bot.sendMessage(msg.chat.id, OK, markup = markupUtil.getDefaultMarkup())
         }
