@@ -60,7 +60,7 @@ fun main() {
     }.then { msg ->
         bot.sendMessage(msg.chat.id, ASK_RULES).join()
         bot.sendMessage(msg.chat.id, RULES, markup = markupUtil.getAgreeRulesMarkup())
-        sheetsUtil.updateColumn("I", msg.chat.id, "'+")
+        sheetsUtil.updateColumn("I", msg.chat.id, msg.text.toString())
     }.then("checkAgreed") { msg ->
         if (msg.text == AGREE) {
             bot.sendMessage(msg.chat.id, FINISH_REGISTRATION, markup = markupUtil.getDefaultMarkup())
