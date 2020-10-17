@@ -49,11 +49,11 @@ fun main() {
         sheetsUtil.updateColumn("C", msg.chat.id, msg.text.toString())
     }.then { msg ->
         bot.sendMessage(msg.chat.id, ASK_YEAR_STUDY, markup = markupUtil.getYearStudyMarkup())
-        sheetsUtil.updateColumn("G", msg.chat.id, msg.text.toString())
+        sheetsUtil.updateColumn("H", msg.chat.id, msg.text.toString())
     }.then("checkYear") { msg ->
         if (msg.text?.toIntOrNull() in 1..6) {
             bot.sendMessage(msg.chat.id, ASK_STUD_PRO, markup = markupUtil.getStudProMarkup())
-            sheetsUtil.updateColumn("H", msg.chat.id, msg.text.toString())
+            sheetsUtil.updateColumn("I", msg.chat.id, msg.text.toString())
         } else {
             bot.sendMessage(msg.chat.id, DEFAULT)
             bot.jumpTo("checkYear", msg)
@@ -61,13 +61,13 @@ fun main() {
     }.then { msg ->
         bot.sendMessage(msg.chat.id, ASK_RULES).join()
         bot.sendMessage(msg.chat.id, RULES, markup = markupUtil.getAgreeRulesMarkup())
-        sheetsUtil.updateColumn("I", msg.chat.id, msg.text.toString())
+        sheetsUtil.updateColumn("J", msg.chat.id, msg.text.toString())
     }.then("checkAgreed") { msg ->
         if (msg.text == AGREE) {
             bot.sendMessage(msg.chat.id, FINISH_REGISTRATION, markup = markupUtil.getDefaultMarkup())
-            sheetsUtil.updateColumn("D", msg.chat.id, LocalDateTime.now().truncatedTo(ChronoUnit.MINUTES).toString())
-            sheetsUtil.updateColumn("F", msg.chat.id, LocalDateTime.now().truncatedTo(ChronoUnit.MINUTES).toString())
-            sheetsUtil.updateColumn("E", msg.chat.id, "1")
+            sheetsUtil.updateColumn("E", msg.chat.id, LocalDateTime.now().truncatedTo(ChronoUnit.MINUTES).toString())
+            sheetsUtil.updateColumn("G", msg.chat.id, LocalDateTime.now().truncatedTo(ChronoUnit.MINUTES).toString())
+            sheetsUtil.updateColumn("F", msg.chat.id, "1")
         } else {
             bot.sendMessage(msg.chat.id, FORCE_AGREE, markup = markupUtil.getAgreeRulesMarkup())
             bot.jumpTo("checkAgreed", msg)
@@ -85,8 +85,8 @@ fun main() {
         if (msg.text == YES) {
             bot.sendMessage(msg.chat.id, THANKS, markup = markupUtil.getDefaultMarkup())
             val student = sheetsUtil.getStudents().first { it.id == msg.chat.id.toString() }
-            sheetsUtil.updateColumn("D", msg.chat.id, LocalDateTime.now().truncatedTo(ChronoUnit.MINUTES).toString())
-            sheetsUtil.updateColumn("E", msg.chat.id, student.checkinCount?.toInt()?.plus(1).toString())
+            sheetsUtil.updateColumn("E", msg.chat.id, LocalDateTime.now().truncatedTo(ChronoUnit.MINUTES).toString())
+            sheetsUtil.updateColumn("F", msg.chat.id, student.checkinCount?.toInt()?.plus(1).toString())
         } else {
             bot.sendMessage(msg.chat.id, OK, markup = markupUtil.getDefaultMarkup())
         }
@@ -105,8 +105,11 @@ fun main() {
 
     bot.onMessage { msg ->
         when (msg.text) {
-            WHOIAM -> bot.sendMessage(msg.chat.id, WHO_I_AM_INFO, markup = markupUtil.getWhoIAmMarkup())
             SUBSCRIBE -> bot.sendMessage(msg.chat.id, SUBSCRIBED, markup = markupUtil.getSubscribeMarkup())
+            WHOIAM -> {
+                bot.sendMessage(msg.chat.id, WHO_I_AM_INFO, markup = markupUtil.getWhoIAmMarkup())
+                sheetsUtil.updateColumn("K", msg.chat.id, "'+")
+            }
             else -> {
                 if (msg.chat.id == System.getenv("feedbackChatId").toLong()) {
                     msg.reply_to_message?.forward_from?.id?.let { bot.sendMessage(it, msg.text.toString()) }
