@@ -35,14 +35,13 @@ class GoogleSheetsUtil {
                 id = it[0],
                 firstName = it.getOrNull(1),
                 lastName = it.getOrNull(2),
-                lastCheckinDate = it.getOrNull(3),
-                checkinCount = it.getOrNull(4),
-                registerDate = it.getOrNull(5),
-                wantWhoIAm = it.getOrNull(6),
-                wantLectorium = it.getOrNull(7),
-                university = it.getOrNull(8),
-                yearStudy = it.getOrNull(9),
-                studProInfo = it.getOrNull(10)
+                comment = it.getOrNull(3),
+                lastCheckinDate = it.getOrNull(4),
+                checkinCount = it.getOrNull(5),
+                registerDate = it.getOrNull(6),
+                university = it.getOrNull(7),
+                yearStudy = it.getOrNull(8),
+                studProInfo = it.getOrNull(9)
             )
         }
     }
