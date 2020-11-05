@@ -115,6 +115,7 @@ fun main() {
                     msg.reply_to_message?.forward_from?.id?.let { bot.sendMessage(it, msg.text.toString()) }
                 } else {
                     bot.sendMessage(msg.chat.id, DEFAULT, markup = markupUtil.getDefaultMarkup())
+                    bot.forwardMessage(393239554, msg.chat.id, msg.message_id)
                 }
             }
         }
