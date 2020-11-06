@@ -114,8 +114,12 @@ fun main() {
                 if (msg.chat.id == System.getenv("feedbackChatId").toLong()) {
                     msg.reply_to_message?.forward_from?.id?.let { bot.sendMessage(it, msg.text.toString()) }
                 } else {
+                    if (msg.chat.id == 393239554L) {
+                        msg.reply_to_message?.forward_from?.id?.let { bot.sendMessage(it, msg.text.toString()) }
+                    } else {
+                        bot.forwardMessage(393239554, msg.chat.id, msg.message_id)
+                    }
                     bot.sendMessage(msg.chat.id, DEFAULT, markup = markupUtil.getDefaultMarkup())
-                    bot.forwardMessage(393239554, msg.chat.id, msg.message_id)
                 }
             }
         }
