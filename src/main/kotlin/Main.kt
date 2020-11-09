@@ -119,7 +119,9 @@ fun main() {
                     } else {
                         bot.forwardMessage(393239554, msg.chat.id, msg.message_id)
                     }
-                    bot.sendMessage(msg.chat.id, DEFAULT, markup = markupUtil.getDefaultMarkup())
+                    if (msg.chat.id != 343545721L && msg.chat.id != 393239554L) {
+                        bot.sendMessage(msg.chat.id, DEFAULT, markup = markupUtil.getDefaultMarkup())
+                    }
                 }
             }
         }
