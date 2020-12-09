@@ -56,7 +56,7 @@ class MessageTexts {
         const val OK = "Гаразд"
         const val YES = "Так"
         const val NO = "Ні"
-        const val DEFAULT = "Не розумію тебе.."
+        const val DEFAULT = "Інколи я не розумію людей з першого разу, вибач.. можеш повторити? :)"
         val WHO_I_AM_INFO = """
                 Проект ЯХТО
                 
